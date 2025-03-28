@@ -1,0 +1,73 @@
+<!DOCTYPE html>, 
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Bán Đồ Trang Sức - Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-dark text-white p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="m-0">Shop Bán Đồ Trang Sức</h1>
+            <div>
+                <a href="login.html" id="login-link" class="text-white mx-2">Đăng Nhập</a>
+                <a href="register.html" id="register-link" class="text-white mx-2">Đăng Ký</a>
+                <span id="user-info" class="text-white mx-2" style="display: none;"></span>
+                <a href="admin.html" id="admin-link" class="text-white mx-2" style="display: none;">Quản Trị</a>
+                <a href="#" id="logout" class="text-white mx-2" style="display: none;">Đăng Xuất</a>
+            </div>
+        </div>
+    </header>    
+
+    <!-- Navigation -->
+    <nav class="bg-secondary p-2 text-center">
+        <a href="index.html" class="text-white mx-2">Trang Chủ</a>
+        <a href="shop.html" class="text-white mx-2">Sản Phẩm</a>
+        <a href="cart.html" class="text-white mx-2">Giỏ Hàng</a>c
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mt-4">
+        <h2 class="text-center">Danh Sách Sản Phẩm</h2>
+        <div class="row" id="product-list">
+            <!-- Sản phẩm sẽ được thêm vào đây từ shop.js -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+        <p>&copy; 2025 Shop Bán Đồ Trang Sức. Mọi quyền được bảo lưu.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="shop.js"></script> <!-- Gọi file JavaScript xử lý hiển thị sản phẩm -->
+    <script>
+        $(document).ready(function () {
+            let userData = localStorage.getItem("user");
+            let currentUser = userData ? JSON.parse(userData) : null;
+
+            if (currentUser) {
+                $("#login-link, #register-link").hide();
+                $("#user-info").text(`Xin chào, ${currentUser.username}`).show();
+                $("#logout").show();
+
+                if (currentUser.role === "admin") {
+                    $("#admin-link").show();
+                }
+            } else {
+                $("#user-info, #logout, #admin-link").hide();
+            }
+
+            $("#logout").click(function () {
+                localStorage.removeItem("user");
+                alert("Bạn đã đăng xuất!");
+                location.reload();
+            });
+        });
+    </script>    
+</body>
+</html>
